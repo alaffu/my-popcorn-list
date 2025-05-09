@@ -76,4 +76,56 @@ public class AppDbHelper extends SQLiteOpenHelper {
                 MoviesContract.MovieEntry.COLUMN_NAME_TIMESTAMP + " DESC"
         );
     }
+
+    /** Retrieves a movie by ID */
+    public Cursor getMovie(long id) {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] projection = {
+                MoviesContract.MovieEntry._ID,
+                MoviesContract.MovieEntry.COLUMN_NAME_TITLE,
+                MoviesContract.MovieEntry.COLUMN_NAME_DESCRIPTION,
+                MoviesContract.MovieEntry.COLUMN_NAME_TYPE,
+                MoviesContract.MovieEntry.COLUMN_NAME_RATING,
+                MoviesContract.MovieEntry.COLUMN_NAME_REVIEW,
+                MoviesContract.MovieEntry.COLUMN_NAME_TIMESTAMP
+        };
+        String selection = MoviesContract.MovieEntry._ID + " = ?";
+        String[] selectionArgs = { String.valueOf(id) };
+        return db.query(
+                MoviesContract.MovieEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+    }
+
+    /** Updates an existing movie entry and returns number of rows updated */
+    public int updateMovie(long id, String title, String description, String type, int rating, String review) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MoviesContract.MovieEntry.COLUMN_NAME_TITLE, title);
+        values.put(MoviesContract.MovieEntry.COLUMN_NAME_DESCRIPTION, description);
+        values.put(MoviesContract.MovieEntry.COLUMN_NAME_TYPE, type);
+        values.put(MoviesContract.MovieEntry.COLUMN_NAME_RATING, rating);
+        values.put(MoviesContract.MovieEntry.COLUMN_NAME_REVIEW, review);
+        return db.update(
+                MoviesContract.MovieEntry.TABLE_NAME,
+                values,
+                MoviesContract.MovieEntry._ID + " = ?",
+                new String[]{ String.valueOf(id) }
+        );
+    }
+
+    /** Deletes a movie entry and returns number of rows deleted */
+    public int deleteMovie(long id) {
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(
+                MoviesContract.MovieEntry.TABLE_NAME,
+                MoviesContract.MovieEntry._ID + " = ?",
+                new String[]{ String.valueOf(id) }
+        );
+    }
 } 

@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,11 +15,12 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.mypopcornlist.data.MovieDao;
 import com.example.mypopcornlist.data.MoviesContract;
 import com.example.mypopcornlist.databinding.ActivityMainBinding;
+import com.example.mypopcornlist.MovieCursorAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private MovieDao movieDao;
-    private SimpleCursorAdapter adapter;
+    private MovieCursorAdapter adapter;
     private Cursor cursor; // Store cursor to close it later
 
     @Override
@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         int[] toViews = {R.id.textViewMovieTitle, R.id.textViewMovieRating};
 
         // Initialize with null cursor, will be swapped in onResume
-        adapter = new SimpleCursorAdapter(this,
+        adapter = new MovieCursorAdapter(
+                this,
                 R.layout.item_movie,
                 null, // Cursor will be set in onResume
                 fromColumns,
@@ -65,7 +66,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Refresh the data in the list
+        refreshList();
+    }
+
+    /** Refreshes the list data from the database. */
+    public void refreshList() {
         if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
