@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.MyPopcornList" parent="Theme.Material3.Light.NoActionBar" />
+    <style name="Theme.MyPopcornList" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Outros itens -->
+        <item name="colorPrimary">@color/gray</item>
+        <item name="colorControlActivated">@color/gray</item>
+    </style>
 </resources>

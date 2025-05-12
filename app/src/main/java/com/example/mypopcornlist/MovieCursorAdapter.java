@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.RatingBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -23,10 +24,14 @@ public class MovieCursorAdapter extends SimpleCursorAdapter {
 
     @Override
     public void bindView(View view, Context context, final Cursor cursor) {
-        // Bind the title and rating using the parent SimpleCursorAdapter
         super.bindView(view, context, cursor);
 
-        // Setup the overflow menu button
+        // RatingBar - exibir nota em estrelas
+        RatingBar ratingBar = view.findViewById(R.id.ratingBarItem);
+        int rating = cursor.getInt(cursor.getColumnIndexOrThrow(MoviesContract.MovieEntry.COLUMN_NAME_RATING));
+        ratingBar.setRating(rating);
+
+        // Menu de opções
         ImageButton btnMore = view.findViewById(R.id.btnMore);
         TextView tvTitle = view.findViewById(R.id.textViewMovieTitle);
         final long id = cursor.getLong(cursor.getColumnIndexOrThrow(MoviesContract.MovieEntry._ID));
@@ -43,26 +48,27 @@ public class MovieCursorAdapter extends SimpleCursorAdapter {
                     context.startActivity(intent);
                 } else if ("Remover".equals(item.getTitle())) {
                     new AlertDialog.Builder(context)
-                        .setTitle("Remover")
-                        .setMessage("Tem certeza que deseja remover \"" + title + "\"?")
-                        .setPositiveButton("Remover", (dialog, which) -> {
-                            MovieDao dao = new MovieDao(context);
-                            dao.deleteMovie(id);
-                            if (context instanceof MainActivity) {
-                                ((MainActivity) context).refreshList();
-                                Snackbar.make(
-                                    ((Activity) context).findViewById(R.id.main),
-                                    "\"" + title + "\" removido",
-                                    Snackbar.LENGTH_LONG
-                                ).show();
-                            }
-                        })
-                        .setNegativeButton("Cancelar", null)
-                        .show();
+                            .setTitle("Remover")
+                            .setMessage("Tem certeza que deseja remover \"" + title + "\"?")
+                            .setPositiveButton("Remover", (dialog, which) -> {
+                                MovieDao dao = new MovieDao(context);
+                                dao.deleteMovie(id);
+                                if (context instanceof MainActivity) {
+                                    ((MainActivity) context).refreshList();
+                                    Snackbar.make(
+                                            ((Activity) context).findViewById(R.id.main),
+                                            "\"" + title + "\" removido",
+                                            Snackbar.LENGTH_LONG
+                                    ).show();
+                                }
+                            })
+                            .setNegativeButton("Cancelar", null)
+                            .show();
                 }
                 return true;
             });
             menu.show();
         });
     }
+
 } 

@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         // Setup ListView
         ListView listViewMovies = findViewById(R.id.listViewMovies);
 
-        String[] fromColumns = {MoviesContract.MovieEntry.COLUMN_NAME_TITLE, MoviesContract.MovieEntry.COLUMN_NAME_RATING};
-        int[] toViews = {R.id.textViewMovieTitle, R.id.textViewMovieRating};
+        String[] fromColumns = {MoviesContract.MovieEntry.COLUMN_NAME_TITLE};
+        int[] toViews = {R.id.textViewMovieTitle};
 
         // Initialize with null cursor, will be swapped in onResume
         adapter = new MovieCursorAdapter(

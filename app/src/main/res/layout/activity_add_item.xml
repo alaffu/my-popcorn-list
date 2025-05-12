@@ -9,7 +9,9 @@
         android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        android:background="@color/black"
+        app:titleTextColor="@color/red"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.Material3.Dark"
         app:title="Adicionar filme/série" />
@@ -32,17 +34,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+
                 <!-- Título input with extra top margin -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:hint="Título">
+                    android:hint="Título"
+                    app:boxStrokeColor="@color/gray"
+                    app:boxBackgroundMode="outline"
+                    app:hintTextColor="@color/gray"
+                    android:textColor="@color/gray">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Tipo: Filme ou Série -->
@@ -56,13 +63,18 @@
                         android:id="@+id/radioFilme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Filme" />
+                        android:text="Filme"
+                        android:buttonTint="@color/gray"
+                        android:textColor="@color/gray" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/radioSerie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Série" />
+                        android:text="Série"
+                        android:buttonTint="@color/gray"
+                        android:textColor="@color/gray" />
+
                 </RadioGroup>
 
                 <!-- Avaliação de estrelas -->
@@ -82,14 +94,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Sua avaliação"
-                    app:endIconMode="clear_text">
+                    app:endIconMode="clear_text"
+                    app:boxStrokeColor="@color/gray"
+                    app:boxBackgroundMode="outline"
+                    app:hintTextColor="@color/gray"
+                    android:textColor="@color/gray">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etReview"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:gravity="top"
-                        android:inputType="textMultiLine" />
+                        android:inputType="textMultiLine"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
@@ -99,6 +115,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"
             style="@style/Widget.Material3.Button"
+            android:backgroundTint="@color/gray"
+            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
