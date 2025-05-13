@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.database.Cursor;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.EdgeToEdge;
@@ -71,22 +72,31 @@ public class AddItem extends AppCompatActivity {
 
         // Save button click – read inputs, log values, and persist
         binding.btnSave.setOnClickListener(v -> {
-            String title = binding.etTitle.getText().toString().trim();
-            String review = binding.etReview.getText().toString().trim();
-            String type = binding.radioFilme.isChecked() ? "Filme" : "Série";
-            int rating = (int) binding.ratingBar.getRating();
-            Log.d(TAG, (isEditMode ? "Updating" : "Saving") + " movie: title=" + title + ", type=" + type + ", rating=" + rating + ", review=" + review);
-            MovieDao dao = new MovieDao(this);
-            Intent result = new Intent();
-            if (isEditMode) {
-                dao.updateMovie(editItemId, title, "", type, rating, review);
-                result.putExtra("UPDATED_ITEM_ID", editItemId);
-            } else {
-                long newId = dao.saveMovie(title, "", type, rating, review);
-                result.putExtra("NEW_ITEM_ID", newId);
+
+            if (binding.etTitle.getText().toString().trim().isEmpty()) {
+                Toast.makeText(this, "Preencha o título para concluir.", Toast.LENGTH_SHORT).show();
+            } else if (binding.radioGroup.getCheckedRadioButtonId() == -1) {
+                Toast.makeText(this, "Selecione o tipo (Filme ou Série) para concluir.", Toast.LENGTH_SHORT).show();
+            } else if (binding.etReview.getText().toString().trim().isEmpty()) {
+                Toast.makeText(this, "Preencha a avaliação para concluir.", Toast.LENGTH_SHORT).show();
+            }else{
+                String title = binding.etTitle.getText().toString().trim();
+                String review = binding.etReview.getText().toString().trim();
+                String type = binding.radioFilme.isChecked() ? "Filme" : "Série";
+                int rating = (int) binding.ratingBar.getRating();
+                Log.d(TAG, (isEditMode ? "Updating" : "Saving") + " movie: title=" + title + ", type=" + type + ", rating=" + rating + ", review=" + review);
+                MovieDao dao = new MovieDao(this);
+                Intent result = new Intent();
+                if (isEditMode) {
+                    dao.updateMovie(editItemId, title, "", type, rating, review);
+                    result.putExtra("UPDATED_ITEM_ID", editItemId);
+                } else {
+                    long newId = dao.saveMovie(title, "", type, rating, review);
+                    result.putExtra("NEW_ITEM_ID", newId);
+                }
+                setResult(RESULT_OK, result);
+                finish();
             }
-            setResult(RESULT_OK, result);
-            finish();
         });
     }
 
