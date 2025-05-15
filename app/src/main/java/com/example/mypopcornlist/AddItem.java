@@ -48,7 +48,7 @@ public class AddItem extends AppCompatActivity {
                 }
         );
 
-        // Check if launched for editing an existing movie
+        // Verifica se foi chamado para editar um filme existente
         Intent launchIntent = getIntent();
         if (launchIntent != null && launchIntent.hasExtra("ITEM_ID")) {
             isEditMode = true;
@@ -70,7 +70,7 @@ public class AddItem extends AppCompatActivity {
             }
         }
 
-        // Save button click – read inputs, log values, and persist
+        // Clique do botão Salvar – lê as entradas, registra os valores e persiste
         binding.btnSave.setOnClickListener(v -> {
 
             if (binding.etTitle.getText().toString().trim().isEmpty()) {

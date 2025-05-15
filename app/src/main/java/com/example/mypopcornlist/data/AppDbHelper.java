@@ -36,12 +36,12 @@ public class AppDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // For now, simply drop the table and recreate. In production, you should migrate carefully.
+        // Por enquanto, simplesmente apague a tabela e recrie. Em produção, você deve migrar com cuidado.
         db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 
-    /** Inserts a new movie entry and returns its row ID. */
+    /** Insere uma nova entrada de filme e retorna seu ID de linha. */
     public long insertMovie(String title, String description, String type, int rating, String review) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -54,7 +54,7 @@ public class AppDbHelper extends SQLiteOpenHelper {
         return db.insert(MoviesContract.MovieEntry.TABLE_NAME, null, values);
     }
 
-    /** Returns a Cursor over all movie entries, sorted by newest first. */
+    /** Retorna um Cursor sobre todas as entradas de filme, ordenadas pelas mais recentes primeiro. */
     public Cursor getAllMovies() {
         SQLiteDatabase db = getReadableDatabase();
         String[] projection = {
@@ -77,7 +77,7 @@ public class AppDbHelper extends SQLiteOpenHelper {
         );
     }
 
-    /** Retrieves a movie by ID */
+    /** Recupera um filme por ID */
     public Cursor getMovie(long id) {
         SQLiteDatabase db = getReadableDatabase();
         String[] projection = {
@@ -102,7 +102,7 @@ public class AppDbHelper extends SQLiteOpenHelper {
         );
     }
 
-    /** Updates an existing movie entry and returns number of rows updated */
+    /** Atualiza uma entrada de filme existente e retorna o número de linhas atualizadas */
     public int updateMovie(long id, String title, String description, String type, int rating, String review) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -119,7 +119,7 @@ public class AppDbHelper extends SQLiteOpenHelper {
         );
     }
 
-    /** Deletes a movie entry and returns number of rows deleted */
+    /** Exclui uma entrada de filme e retorna o número de linhas excluídas */
     public int deleteMovie(long id) {
         SQLiteDatabase db = getWritableDatabase();
         return db.delete(

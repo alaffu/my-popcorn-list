@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private MovieDao movieDao;
     private MovieCursorAdapter adapter;
-    private Cursor cursor; // Store cursor to close it later
+    private Cursor cursor; // Armazena o cursor para fechá-lo mais tarde
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +39,17 @@ public class MainActivity extends AppCompatActivity {
 
         movieDao = new MovieDao(this);
 
-        // Setup ListView
+        // Configura o ListView
         ListView listViewMovies = findViewById(R.id.listViewMovies);
 
         String[] fromColumns = {MoviesContract.MovieEntry.COLUMN_NAME_TITLE};
         int[] toViews = {R.id.textViewMovieTitle};
 
-        // Initialize with null cursor, will be swapped in onResume
+        // Inicializa com cursor nulo, será trocado no onResume
         adapter = new MovieCursorAdapter(
                 this,
                 R.layout.item_movie,
-                null, // Cursor will be set in onResume
+                null, // O cursor será definido em onResume
                 fromColumns,
                 toViews,
                 0);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         refreshList();
     }
 
-    /** Refreshes the list data from the database. */
+    /** Atualiza os dados da lista a partir do banco de dados. */
     public void refreshList() {
         if (cursor != null && !cursor.isClosed()) {
             cursor.close();
@@ -82,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Close the cursor to avoid memory leaks
+        // Fecha o cursor para evitar vazamentos de memória
         if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
-        // If movieDao holds a reference to the database, consider adding a close() method to MovieDao/AppDbHelper
-        // and call it here, e.g., movieDao.close();
+        // Se movieDao mantiver uma referência ao banco de dados, considere adicionar um método close() a MovieDao/AppDbHelper
+        // e chamá-lo aqui, por exemplo, movieDao.close();
     }
 }

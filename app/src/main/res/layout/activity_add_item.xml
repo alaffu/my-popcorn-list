@@ -35,7 +35,7 @@
                 android:orientation="vertical">
 
 
-                <!-- Título input with extra top margin -->
+                <!-- Campo de entrada do título com margem superior extra -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
             </LinearLayout>
         </ScrollView>
 
-        <!-- Botão Salvar at the bottom -->
+        <!-- Botão Salvar na parte inferior -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"
             style="@style/Widget.Material3.Button"
